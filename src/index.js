@@ -10,9 +10,13 @@ import { OrbitControls } from "./OrbitControls.js";
 import { AbortablePromise } from "./AbortablePromise.js";
 import { SceneFormat } from "./SceneFormat.js";
 import { WebXRMode } from "./webxr/WebXRMode.js";
+import { CompressedPlyParser } from "./CompressedPlyParser.js";
+import { PlyParserCompress } from "./PlyParserCompress.js";
+import { PlyParserDecompress } from "./CompressedPlyParser.js";
 
 export {
-  // CompressedPlyParser,
+  PlyParserCompress,
+  PlyParserDecompress,
   PlyParser,
   PlyLoader,
   SplatLoader,

@@ -495,50 +495,50 @@
         'splatAlphaRemovalThreshold': alphaRemovalThreshold
       };
 
-      const parser = new GaussianSplats3D.CompressedPlyParser();
-      await parser.readPly(splatBufferData);
-      parser.convertFileToSplatData();
-      const compressedFile = parser.compress();
-      console.log(compressedFile);
+      // const parser = new GaussianSplats3D.PlyParserCompress();
+      // await parser.readPly(splatBufferData);
+      // parser.convertFileToSplatData();
+      // const compressedFile = parser.compress();
+      // console.log(compressedFile);
 
-      const download = (filename, data) => {
-        const blob = new Blob([data], { type: "octet/stream" });
-        const url = window.URL.createObjectURL(blob);
+      // const download = (filename, data) => {
+      //   const blob = new Blob([data], { type: "octet/stream" });
+      //   const url = window.URL.createObjectURL(blob);
 
-        const lnk = document.createElement("a");
-        lnk.download = filename;
-        lnk.href = url;
+      //   const lnk = document.createElement("a");
+      //   lnk.download = filename;
+      //   lnk.href = url;
 
-        // create a "fake" click-event to trigger the download
-        if (document.createEvent) {
-          const e = document.createEvent("MouseEvents");
-          e.initMouseEvent(
-            "click",
-            true,
-            true,
-            window,
-            0,
-            0,
-            0,
-            0,
-            0,
-            false,
-            false,
-            false,
-            false,
-            0,
-            null
-          );
-          lnk.dispatchEvent(e);
-        } else {
-          // @ts-ignore
-          lnk.fireEvent?.("onclick");
-        }
+      //   // create a "fake" click-event to trigger the download
+      //   if (document.createEvent) {
+      //     const e = document.createEvent("MouseEvents");
+      //     e.initMouseEvent(
+      //       "click",
+      //       true,
+      //       true,
+      //       window,
+      //       0,
+      //       0,
+      //       0,
+      //       0,
+      //       0,
+      //       false,
+      //       false,
+      //       false,
+      //       false,
+      //       0,
+      //       null
+      //     );
+      //     lnk.dispatchEvent(e);
+      //   } else {
+      //     // @ts-ignore
+      //     lnk.fireEvent?.("onclick");
+      //   }
 
-        window.URL.revokeObjectURL(url);
-      };
+      //   window.URL.revokeObjectURL(url);
+      // };
 
-      download("compressed.ply", compressedFile);
+      // download("compressed.ply", compressedFile);
 
       const splatBuffer = fileBufferToSplatBuffer(splatBufferData, isPly, isStandardSplat, 0, alphaRemovalThreshold);
       console.log(splatBuffer)
