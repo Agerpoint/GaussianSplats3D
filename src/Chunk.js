@@ -61,31 +61,44 @@ export class Chunk {
   transform(mat) {
     const quat = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().fromArray(mat));
     const scale = new THREE.Vector3().setFromMatrixScale(new THREE.Matrix4().fromArray(mat));
-    const position = new THREE.Vector3();
+
+    const data = this.data;
+
+    const x = data.x;
+    const y = data.y;
+    const z = data.z;
+    const scale_0 = data.scale_0;
+    const scale_1 = data.scale_1;
+    const scale_2 = data.scale_2;
+    const rot_0 = data.rot_0;
+    const rot_1 = data.rot_1;
+    const rot_2 = data.rot_2;
+    const rot_3 = data.rot_3;
+
+    const v = new THREE.Vector3();
     const q = new THREE.Quaternion();
 
-    Object.keys(this.data).forEach(key => {
-      for (let i = 0; i < this.size; ++i) {
-        if (['x', 'y', 'z'].includes(key)) {
-          position.set(this.data.x[i], this.data.y[i], this.data.z[i]);
-          position.applyMatrix4(new THREE.Matrix4().fromArray(mat));
-          this.data.x[i] = position.x;
-          this.data.y[i] = position.y;
-          this.data.z[i] = position.z;
-        } else if (['rot_0', 'rot_1', 'rot_2', 'rot_3'].includes(key)) {
-          q.set(this.data.rot_1[i], this.data.rot_2[i], this.data.rot_3[i], this.data.rot_0[i]);
-          q.multiply(quat);
-          this.data.rot_0[i] = q.w;
-          this.data.rot_1[i] = q.x;
-          this.data.rot_2[i] = q.y;
-          this.data.rot_3[i] = q.z;
-        } else if (['scale_0', 'scale_1', 'scale_2'].includes(key)) {
-          this.data.scale_0[i] *= scale.x;
-          this.data.scale_1[i] *= scale.y;
-          this.data.scale_2[i] *= scale.z;
-        }
-      }
-    });
+    for (let i = 0; i < this.size; ++i) {
+        // position
+        v.set(x[i], y[i], z[i]);
+        v.applyMatrix4(new THREE.Matrix4().fromArray(mat));
+        x[i] = v.x;
+        y[i] = v.y;
+        z[i] = v.z;
+
+        // rotation
+        q.set(rot_1[i], rot_2[i], rot_3[i], rot_0[i]).multiplyQuaternions(quat, q);
+        rot_0[i] = q.w;
+        rot_1[i] = q.x;
+        rot_2[i] = q.y;
+        rot_3[i] = q.z;
+
+        // scale
+        scale_0[i] = Math.log(Math.exp(scale_0[i]) * scale.x);
+        scale_1[i] = Math.log(Math.exp(scale_1[i]) * scale.y);
+        scale_2[i] = Math.log(Math.exp(scale_2[i]) * scale.z);
+    }
+
   }
 
   pack() {
