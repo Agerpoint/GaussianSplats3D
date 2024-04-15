@@ -1,4 +1,3 @@
-// import { CompressedPlyParser } from "./CompressedPlyParser.js";
 import { PlyParser } from "./PlyParser.js";
 import { PlyLoader } from "./PlyLoader.js";
 import { SplatLoader } from "./SplatLoader.js";
@@ -10,9 +9,10 @@ import { OrbitControls } from "./OrbitControls.js";
 import { AbortablePromise } from "./AbortablePromise.js";
 import { SceneFormat } from "./SceneFormat.js";
 import { WebXRMode } from "./webxr/WebXRMode.js";
+import { PlyParserCompress } from "./PlyParserCompress.js";
+import { PlyParserDecompress } from "./PlyParserDecompress.js";
 
 export {
-  // CompressedPlyParser,
   PlyParser,
   PlyLoader,
   SplatLoader,
@@ -24,4 +24,6 @@ export {
   AbortablePromise,
   SceneFormat,
   WebXRMode,
+  PlyParserCompress,
+  PlyParserDecompress
 };
