@@ -63,11 +63,11 @@ export class SplatMaterial3D {
         // Add the crop box uniforms with a default size of 2x2x2
         uniforms['boxMin'] = {
             'type': 'v3',
-            'value': new THREE.Vector3(-2, -2, -2) // Default box min (-1 to 1)
+            'value': new THREE.Vector3(-Infinity, -Infinity, -Infinity) // Default box min (-1 to 1)
         };
         uniforms['boxMax'] = {
             'type': 'v3',
-            'value': new THREE.Vector3(2, 2, 2) // Default box max (1 to -1)
+            'value': new THREE.Vector3(Infinity, Infinity, Infinity) // Default box max (1 to -1)
         };
 
         const material = new THREE.ShaderMaterial({
