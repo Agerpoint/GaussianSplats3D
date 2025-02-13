@@ -284,9 +284,9 @@ export class Viewer {
 
     createSplatMesh() {
         this.splatMesh = new SplatMesh(this.splatRenderMode, this.dynamicScene, this.enableOptionalEffects,
-                                       this.halfPrecisionCovariancesOnGPU, this.devicePixelRatio, this.gpuAcceleratedSort,
-                                       this.integerBasedSort, this.antialiased, this.maxScreenSpaceSplatSize, this.logLevel,
-                                       this.sphericalHarmonicsDegree, this.sceneFadeInRateMultiplier);
+            this.halfPrecisionCovariancesOnGPU, this.devicePixelRatio, this.gpuAcceleratedSort,
+            this.integerBasedSort, this.antialiased, this.maxScreenSpaceSplatSize, this.logLevel,
+            this.sphericalHarmonicsDegree, this.sceneFadeInRateMultiplier);
         this.splatMesh.frustumCulled = false;
         if (this.onSplatMeshChangedCallback) this.onSplatMeshChangedCallback();
     }
@@ -886,18 +886,18 @@ export class Viewer {
                 progressiveLoadedSectionBuilding = true;
                 const queuedBuild = queuedProgressiveLoadSectionBuilds.shift();
                 buildFunc(queuedBuild.splatBuffer, queuedBuild.firstBuild, queuedBuild.finalBuild)
-                .then(() => {
-                    progressiveLoadedSectionBuilding = false;
-                    if (queuedBuild.firstBuild) {
-                        progressiveLoadFirstSectionBuildPromise.resolve();
-                    } else if (queuedBuild.finalBuild) {
-                        splatSceneDownloadAndBuildPromise.resolve();
-                        this.clearSplatSceneDownloadAndBuildPromise();
-                    }
-                    if (queuedProgressiveLoadSectionBuilds.length > 0) {
-                        delayedExecute(() => checkAndBuildProgressiveLoadSections());
-                    }
-                });
+                    .then(() => {
+                        progressiveLoadedSectionBuilding = false;
+                        if (queuedBuild.firstBuild) {
+                            progressiveLoadFirstSectionBuildPromise.resolve();
+                        } else if (queuedBuild.finalBuild) {
+                            splatSceneDownloadAndBuildPromise.resolve();
+                            this.clearSplatSceneDownloadAndBuildPromise();
+                        }
+                        if (queuedProgressiveLoadSectionBuilds.length > 0) {
+                            delayedExecute(() => checkAndBuildProgressiveLoadSections());
+                        }
+                    });
             }
         };
 
@@ -917,7 +917,7 @@ export class Viewer {
         };
 
         const splatSceneDownloadPromise = this.downloadSplatSceneToSplatBuffer(path, splatAlphaRemovalThreshold, onDownloadProgress, true,
-                                                                               onProgressiveLoadSectionProgress, format);
+            onProgressiveLoadSectionProgress, format);
 
         const progressiveLoadFirstSectionBuildPromise = abortablePromiseWithExtractedComponents(splatSceneDownloadPromise.abortHandler);
         const splatSceneDownloadAndBuildPromise = abortablePromiseWithExtractedComponents();
@@ -1055,20 +1055,20 @@ export class Viewer {
      * @return {AbortablePromise}
      */
     downloadSplatSceneToSplatBuffer(path, splatAlphaRemovalThreshold = 1, onProgress = undefined,
-                                    progressiveBuild = false, onSectionBuilt = undefined, format) {
+        progressiveBuild = false, onSectionBuilt = undefined, format) {
 
         const optimizeSplatData = progressiveBuild ? false : this.optimizeSplatData;
         try {
             if (format === SceneFormat.Splat) {
                 return SplatLoader.loadFromURL(path, onProgress, progressiveBuild,
-                                               onSectionBuilt, splatAlphaRemovalThreshold,
-                                               this.inMemoryCompressionLevel, optimizeSplatData);
+                    onSectionBuilt, splatAlphaRemovalThreshold,
+                    this.inMemoryCompressionLevel, optimizeSplatData);
             } else if (format === SceneFormat.KSplat) {
                 return KSplatLoader.loadFromURL(path, onProgress, progressiveBuild, onSectionBuilt);
             } else if (format === SceneFormat.Ply) {
                 return PlyLoader.loadFromURL(path, onProgress, progressiveBuild, onSectionBuilt,
-                                             splatAlphaRemovalThreshold, this.inMemoryCompressionLevel,
-                                             optimizeSplatData, this.sphericalHarmonicsDegree);
+                    splatAlphaRemovalThreshold, this.inMemoryCompressionLevel,
+                    optimizeSplatData, this.sphericalHarmonicsDegree);
             }
         } catch (e) {
             if (e instanceof DirectLoadError) {
@@ -1115,8 +1115,8 @@ export class Viewer {
                         resolve();
                     } else {
                         const buildResults = this.addSplatBuffersToMesh(splatBuffers, splatBufferOptions, finalBuild,
-                                                                        showLoadingUIForSplatTreeBuild, replaceExisting,
-                                                                        preserveVisibleRegion);
+                            showLoadingUIForSplatTreeBuild, replaceExisting,
+                            preserveVisibleRegion);
 
                         const maxSplatCount = this.splatMesh.getMaxSplatCount();
                         if (this.sortWorker && this.sortWorker.maxSplatCount !== maxSplatCount) this.disposeSortWorker();
@@ -1237,7 +1237,7 @@ export class Viewer {
             const splatCount = splatMesh.getSplatCount();
             const maxSplatCount = splatMesh.getMaxSplatCount();
             this.sortWorker = createSortWorker(maxSplatCount, this.sharedMemoryForWorkers, this.enableSIMDInSort,
-                                               this.integerBasedSort, this.splatMesh.dynamicMode, this.splatSortDistanceMapPrecision);
+                this.integerBasedSort, this.splatMesh.dynamicMode, this.splatSortDistanceMapPrecision);
             this.sortWorker.onmessage = (e) => {
                 if (e.data.sortDone) {
                     this.sortRunning = false;
@@ -1555,7 +1555,7 @@ export class Viewer {
         const lastCameraOrientation = new THREE.Quaternion();
         const changeEpsilon = 0.0001;
 
-        return function() {
+        return function () {
             if (!this.initialized || !this.splatRenderReady || this.isDisposingOrDisposed()) return false;
 
             let shouldRender = false;
@@ -1588,7 +1588,7 @@ export class Viewer {
 
     render = function () {
 
-        return function() {
+        return function () {
             if (!this.initialized || !this.splatRenderReady || this.isDisposingOrDisposed()) return;
 
             const hasRenderables = (threeScene) => {
@@ -1845,7 +1845,7 @@ export class Viewer {
             }
         ];
 
-        return function(force = false, forceSortAll = false) {
+        return function (force = false, forceSortAll = false) {
             if (!this.initialized) return Promise.resolve(false);
             if (this.sortRunning) return Promise.resolve(true);
             if (this.splatMesh.getSplatCount() <= 0) {
@@ -1890,7 +1890,7 @@ export class Viewer {
                     if (this.splatMesh.dynamicMode || shouldSortAll) {
                         queuedSorts.push(this.splatRenderCount);
                     } else {
-                            for (let partialSort of partialSorts) {
+                        for (let partialSort of partialSorts) {
                             if (angleDiff < partialSort.angleThreshold) {
                                 for (let sortFraction of partialSort.sortFractions) {
                                     queuedSorts.push(Math.floor(this.splatRenderCount * sortFraction));

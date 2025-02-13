@@ -1,4 +1,5 @@
 dist
 build
+demo/assets/data
 node_modules
 **/*.DS_Store
