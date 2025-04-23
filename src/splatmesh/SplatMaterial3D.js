@@ -21,6 +21,8 @@ export class SplatMaterial3D {
         splatScale = 1.0, pointCloudModeEnabled = false, maxSphericalHarmonicsDegree = 0, kernel2DSize = 0.3) {
 
         const customVertexVars = `
+            uniform vec3 boxMin;
+            uniform vec3 boxMax;
             uniform vec2 covariancesTextureSize;
             uniform highp sampler2D covariancesTexture;
             uniform highp usampler2D covariancesTextureHalfFloat;
@@ -82,12 +84,19 @@ export class SplatMaterial3D {
             depthWrite: false,
             side: THREE.DoubleSide
         });
-
         return material;
     }
 
     static buildVertexShaderProjection(antialiased, enableOptionalEffects, maxScreenSpaceSplatSize, kernel2DSize) {
         let vertexShaderSource = `
+            vec3 worldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+            // Crop box logic: discard fragments outside the crop box
+            if (vWorldPosition.x < boxMin.x || vWorldPosition.x > boxMax.x ||
+                vWorldPosition.y < boxMin.y || vWorldPosition.y > boxMax.y ||
+                vWorldPosition.z < boxMin.z || vWorldPosition.z > boxMax.z) {
+                return;
+            }
+
 
             vec4 sampledCovarianceA;
             vec4 sampledCovarianceB;
