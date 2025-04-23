@@ -243,15 +243,23 @@ export class SplatMaterial3D {
             #include <common>
  
             uniform vec3 debugColor;
+            uniform vec3 boxMin; // Add the crop box minimum uniform
+            uniform vec3 boxMax; // Add the crop box maximum uniform
 
             varying vec4 vColor;
             varying vec2 vUv;
             varying vec2 vPosition;
-
+            varying vec3 vWorldPosition;
         `;
 
         fragmentShaderSource += `
             void main () {
+                // Crop box logic: discard fragments outside the crop box
+                if (vWorldPosition.x < boxMin.x || vWorldPosition.x > boxMax.x ||
+                    vWorldPosition.y < boxMin.y || vWorldPosition.y > boxMax.y ||
+                    vWorldPosition.z < boxMin.z || vWorldPosition.z > boxMax.z) {
+                    discard;
+                }
                 // Compute the positional squared distance from the center of the splat to the current fragment.
                 float A = dot(vPosition, vPosition);
                 // Since the positional data in vPosition has been scaled by sqrt(8), the squared result will be

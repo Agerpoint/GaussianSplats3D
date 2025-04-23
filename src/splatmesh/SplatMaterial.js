@@ -19,7 +19,6 @@ export class SplatMaterial {
         uniform vec2 sceneIndexesTextureSize;
         uniform int sceneCount;
         varying vec3 vWorldPosition;
-
     `;
 
         if (enableOptionalEffects) {
@@ -124,7 +123,6 @@ export class SplatMaterial {
 
             // Calculate the world position using the modelMatrix, not the modelViewMatrix
             vWorldPosition = (modelMatrix * vec4(splatCenter, 1.0)).xyz;
-
             uint sceneIndex = uint(0);
             if (sceneCount > 1) {
                 sceneIndex = texture(sceneIndexesTexture, getDataUV(1, 0, sceneIndexesTextureSize)).r;
@@ -236,7 +234,7 @@ export class SplatMaterial {
                         sh3 = vec3(sampledSH01B.rg, sampledSH23B.r);
                     }
                 `;
-            // Sample spherical harmonics textures with 2 degrees worth of data for 1st degree calculations, and store in sh1, sh2, and sh3
+                // Sample spherical harmonics textures with 2 degrees worth of data for 1st degree calculations, and store in sh1, sh2, and sh3
             } else if (maxSphericalHarmonicsDegree === 2) {
                 vertexShaderSource += `
                     vec4 sampledSH0123;
