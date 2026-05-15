@@ -6,6 +6,7 @@ This file is maintained by the Agerpoint BOK and installed via `cd ~/agerpoint/b
 
 This repo follows the Agerpoint engineering standards. The BOK is cloned to `~/agerpoint/bok/` and this repo is symlinked to `~/agerpoint/<repo>/` before every Copilot session (see `.github/workflows/copilot-setup-steps.yml`). Read these when relevant to your change:
 
+- `~/agerpoint/bok/agents/AGENTS.md` — Agent meta: where to load standards from, plus the verification canary.
 - `~/agerpoint/bok/standards/agents.md` — AI agent habits and principles.
 - `~/agerpoint/bok/standards/git.md` — Branch naming, commit messages, PR titles, Shortcut integration.
 - `~/agerpoint/bok/standards/code-style.md` — Naming, formatting, imports.
