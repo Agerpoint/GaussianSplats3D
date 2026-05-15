@@ -4,5 +4,3 @@ demo/assets/data
 node_modules
 **/*.DS_Store
 .cursor/rules/personal-*.mdc
-.cursor/rules/agerpoint-*.mdc
-.aiassistant/rules/agerpoint-*.md
