@@ -13,8 +13,11 @@ This repo follows the Agerpoint engineering standards. The BOK is cloned to `~/a
 - `~/agerpoint/bok/standards/testing.md` — Coverage targets, test structure.
 - `~/agerpoint/bok/standards/code-review.md` — Review expectations.
 - `~/agerpoint/bok/standards/architecture.md` — Layering, DI, API design.
+- `~/agerpoint/bok/standards/documentation.md` — What to document, ADR format, TODO conventions.
+- `~/agerpoint/bok/standards/security.md` — Auth, encryption, input validation, checklists.
 - Language-specific: `~/agerpoint/bok/standards/<python|typescript|dotnet|kotlin|swift>/` as applicable.
 - Architecture: `~/agerpoint/bok/architecture/*.md` for system-level context.
+- Past decisions: `~/agerpoint/bok/adrs/*.md` for Architecture Decision Records.
 
 If `~/agerpoint/bok/` is missing, the setup-step workflow failed — surface this rather than proceeding with only repo-local context.
 
